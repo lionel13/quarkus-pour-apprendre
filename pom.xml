@@ -10,7 +10,6 @@
 
     <name>Quarkus Pour Apprendre</name>
     <description>Projet pour permettre d'apprendre Quarkus</description>
-    <packaging>pom</packaging>
 
     <properties>
         <sonar.organization>lionel13-github</sonar.organization>
@@ -39,11 +38,15 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc</artifactId>
+            <artifactId>quarkus-resteasy-reactive-jsonb</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-resteasy-reactive</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

@@ -1,6 +1,5 @@
 package fr.varex13.quarkuspourapprendre.domain.person.impl;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

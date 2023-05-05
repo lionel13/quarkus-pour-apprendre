@@ -15,18 +15,20 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class PersonRepositoryImpl implements PersonRepository {
 
-    private final Set<Person> persons = new HashSet<>() {{
-        add(Person.personBuilder()
+    private final Set<Person> persons = new HashSet<>();
+
+    public PersonRepositoryImpl() {
+        persons.add(Person.personBuilder()
                 .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d"))
                 .nom("AZERTYUIOP")
                 .dateNaissance(LocalDate.now())
                 .build());
-        add(Person.personBuilder()
+        persons.add(Person.personBuilder()
                 .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0e"))
                 .nom("POIUYTREZA")
                 .dateNaissance(LocalDate.of(1977, MARCH, 24))
                 .build());
-    }};
+    }
 
     @Override
     public Optional<Person> getPerson(final UUID uuid) {

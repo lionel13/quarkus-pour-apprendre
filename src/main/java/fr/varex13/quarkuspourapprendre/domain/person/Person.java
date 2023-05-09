@@ -61,11 +61,11 @@ public class Person {
             if(dateNaissance == null) {
                 throw new IllegalArgumentException("dateNaissance ne doit pas être null");
             }
-            if(nom.length() < 10) {
-                throw new IllegalArgumentException("nom doit être au moins de longueur 10");
+            if(nom.length() < 1) {
+                throw new IllegalArgumentException("nom doit être au moins de longueur 1");
             }
             if(dateNaissance.isAfter(LocalDate.now())) {
-                throw new IllegalArgumentException("dateNaissance ne doit pas être dans le passé");
+                throw new IllegalArgumentException("dateNaissance ne doit pas être dans le futur");
             }
             return new Person(this);
         }

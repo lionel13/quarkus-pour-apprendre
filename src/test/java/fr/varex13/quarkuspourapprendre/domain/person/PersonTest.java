@@ -19,7 +19,6 @@ class PersonTest {
     @Test
     void QuandOnCreeUnePersonAlorsOnDoitRetrouverCesValeurs() {
 
-
        final Person person = Person.personBuilder()
                 .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d"))
                 .nom("Nom")

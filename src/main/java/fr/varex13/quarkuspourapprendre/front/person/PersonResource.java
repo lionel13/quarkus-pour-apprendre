@@ -2,12 +2,11 @@ package fr.varex13.quarkuspourapprendre.front.person;
 
 import static fr.varex13.quarkuspourapprendre.front.person.PersonDto.createPersonfromDomain;
 import static fr.varex13.quarkuspourapprendre.front.person.PersonToAddDto.createDomainfromDto;
+import static fr.varex13.quarkuspourapprendre.front.person.PersonsDto.createPersonsDtoFromPersons;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.jboss.resteasy.reactive.RestResponse.StatusCode.NO_CONTENT;
 
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import fr.varex13.quarkuspourapprendre.domain.person.PersonService;
 import fr.varex13.quarkuspourapprendre.domain.person.exception.PersonNotExistsException;
@@ -30,15 +29,16 @@ public class PersonResource {
     }
 
     @GET
-    public Set<PersonDto> findAll() {
-        return personService.getAllPersons().stream().map(PersonDto::createPersonfromDomain).collect(Collectors.toSet());
+    public PersonsDto findAll() {
+        return createPersonsDtoFromPersons(personService.getAllPersons());
     }
 
     @GET
     @Path("/{uuid}")
-    public PersonDto findByUU(@PathParam(value = "uuid") final String uuid) throws PersonNotExistsException {
+    public PersonDto findByUUid(@PathParam(value = "uuid") final String uuid) throws PersonNotExistsException {
         return createPersonfromDomain(personService.getPerson(UUID.fromString(uuid)));
     }
+
     @ResponseStatus(NO_CONTENT)
     @DELETE
     @Path("/{uuid}")

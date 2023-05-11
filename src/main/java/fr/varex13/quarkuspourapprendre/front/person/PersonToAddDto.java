@@ -3,9 +3,9 @@ package fr.varex13.quarkuspourapprendre.front.person;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.varex13.quarkuspourapprendre.domain.person.Person;
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.bind.annotation.JsonbProperty;
 
 public class PersonToAddDto {
     private final String name;
@@ -17,9 +17,9 @@ public class PersonToAddDto {
         this.birth = birth;
     }
 
-    @JsonbCreator
-    public static PersonToAddDto createPersonDto(@JsonbProperty("name") final String name,
-                                                 @JsonbProperty("birth") final String birth) {
+    @JsonCreator
+    public static PersonToAddDto createPersonDto(@JsonProperty("name") final String name,
+                                                 @JsonProperty("birth") final String birth) {
         return new PersonToAddDto(name, birth);
     }
 

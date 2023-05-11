@@ -1,8 +1,10 @@
 package fr.varex13.quarkuspourapprendre.front.person;
 
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.varex13.quarkuspourapprendre.domain.person.Person;
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.bind.annotation.JsonbProperty;
 
 public class PersonDto {
 
@@ -18,10 +20,10 @@ public class PersonDto {
         this.birth = birth;
     }
 
-    @JsonbCreator
-    public static PersonDto createPersonDto(@JsonbProperty("uuid") final String uuid,
-                                            @JsonbProperty("name") final String name,
-                                            @JsonbProperty("birth") final String birth) {
+    @JsonCreator
+    public static PersonDto createPersonDto(@JsonProperty("uuid") final String uuid,
+                                            @JsonProperty("name") final String name,
+                                            @JsonProperty("birth") final String birth) {
         return new PersonDto(uuid, name, birth);
     }
 
@@ -39,6 +41,26 @@ public class PersonDto {
 
     public String getBirth() {
         return birth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonDto personDto = (PersonDto) o;
+
+        if (!Objects.equals(uuid, personDto.uuid)) return false;
+        if (!Objects.equals(name, personDto.name)) return false;
+        return Objects.equals(birth, personDto.birth);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = uuid != null ? uuid.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (birth != null ? birth.hashCode() : 0);
+        return result;
     }
 
     @Override

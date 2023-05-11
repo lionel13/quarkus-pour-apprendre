@@ -16,7 +16,6 @@ import fr.varex13.quarkuspourapprendre.domain.person.PersonService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -25,11 +24,11 @@ class PersonResourceTest {
 
     @Inject
     private PersonResource personResource;
+
     @InjectMock
     private PersonService personService;
 
     @Test
-    @Disabled("En attente TI OK")
     void FindAllEndpoint() {
 
         //GIVEN

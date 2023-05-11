@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.varex13.quarkuspourapprendre.domain.person.Person;
 
 public class PersonToAddDto {
+
     private final String name;
     private final String birth;
 

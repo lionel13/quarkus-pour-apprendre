@@ -9,7 +9,6 @@ import fr.varex13.quarkuspourapprendre.domain.person.PersonService;
 import fr.varex13.quarkuspourapprendre.domain.person.exception.PersonNotExistsException;
 import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;

@@ -1,5 +1,6 @@
 package fr.varex13.quarkuspourapprendre.front.person;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,21 @@ public class PersonsDto {
 
     public Set<PersonDto> getPersonDtos() {
         return personDtos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonsDto that = (PersonsDto) o;
+
+        return Objects.equals(personDtos, that.personDtos);
+    }
+
+    @Override
+    public int hashCode() {
+        return personDtos != null ? personDtos.hashCode() : 0;
     }
 
     @Override

@@ -19,8 +19,8 @@ public class PersonToAddDto {
     }
 
     @JsonCreator
-    public static PersonToAddDto createPersonDto(@JsonProperty("name") final String name,
-                                                 @JsonProperty("birth") final String birth) {
+    public static PersonToAddDto createPersonToAddDto(@JsonProperty("name") final String name,
+                                                      @JsonProperty("birth") final String birth) {
         return new PersonToAddDto(name, birth);
     }
 

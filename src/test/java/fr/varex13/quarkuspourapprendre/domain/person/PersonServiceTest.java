@@ -43,7 +43,7 @@ class PersonServiceTest {
     class FindAll {
 
         @Test
-        void findAllEmpty() {
+        void WhenNoPersonsAreFindThenAnEmptySetIsReturned() {
             when(personRepository.getAllPersons()).thenReturn(EMPTY_SET);
 
             Set<Person> allPersons = personService.getAllPersons();
@@ -52,7 +52,7 @@ class PersonServiceTest {
         }
 
         @Test
-        void findAll() {
+        void WhenPersonsAreFindThenThesePersonsAreReturned() {
             Person person1 = Person.personBuilder()
                     .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d"))
                     .nom("Nom1")
@@ -79,7 +79,7 @@ class PersonServiceTest {
     class FindByUuid {
 
         @Test
-        void findByUuidEmpty() {
+        void WhenNoPersonIsFindThenAnExceptionIsThrowed() {
             when(personRepository.getPerson(any())).thenReturn(Optional.empty());
             Executable allPersons = () -> personService.getPerson(UUID.randomUUID());
             PersonNotExistsException personNotExistsException = Assertions.assertThrowsExactly(PersonNotExistsException.class, allPersons);
@@ -87,7 +87,7 @@ class PersonServiceTest {
         }
 
         @Test
-        void findByUuid() throws PersonNotExistsException {
+        void WhenPersonisFindThenThisPersonIsReturned() throws PersonNotExistsException {
             UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
             Person person = Person.personBuilder()
                     .uuid(uuid)
@@ -105,7 +105,7 @@ class PersonServiceTest {
     class addPerson {
 
         @Test
-        void addPerson() {
+        void WhenAPersonIsAddedThenThisPersonIsReturned() {
             UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
             Person person = Person.personBuilder()
                     .uuid(uuid)
@@ -123,7 +123,7 @@ class PersonServiceTest {
     class removePersonByUuid {
 
         @Test
-        void removePersonByUuid() {
+        void WhenAPersonIsRemovedThenNothingAppend() {
             UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
             doNothing().when(personRepository).removePersonByUuid(uuid);
             Assertions.assertDoesNotThrow(() -> personService.removePersonByUuid(uuid));

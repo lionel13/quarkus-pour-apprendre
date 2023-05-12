@@ -7,7 +7,6 @@ import fr.varex13.quarkuspourapprendre.domain.person.Person;
 import fr.varex13.quarkuspourapprendre.domain.person.PersonRepository;
 import fr.varex13.quarkuspourapprendre.domain.person.PersonService;
 import fr.varex13.quarkuspourapprendre.domain.person.exception.PersonNotExistsException;
-import jakarta.enterprise.context.ApplicationScoped;
 
 public class PersonServiceImpl implements PersonService {
 

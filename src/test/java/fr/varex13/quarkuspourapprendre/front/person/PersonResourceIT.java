@@ -107,8 +107,9 @@ class PersonResourceIT {
 
         @Test
         void WhenNoPersonIsFindThenAnExceptionIsThrowed() {
+            final UUID uuid = UUID.randomUUID();
             ValidatableResponse validatableResponse = given()
-                    .when().get("/api/persons/" + UUID.randomUUID())
+                    .when().get("/api/persons/" + uuid)
                     .then()
                     .assertThat()
                     .statusCode(NOT_FOUND);
@@ -117,7 +118,7 @@ class PersonResourceIT {
                     .body()
                     .as(ErrorMessage.class);
             assertThat(errorMessage, notNullValue());
-            assertThat(errorMessage.message(), is("La personne n'existe pas"));
+            assertThat(errorMessage.message(), is("La personne avec l'UUID '" + uuid + "' n'existe pas"));
             assertThat(errorMessage.status(), is(FALSE));
         }
 
@@ -189,9 +190,9 @@ class PersonResourceIT {
         }
     }
 
-    private PersonDto stringToPersonDto(String personsDtoAsString) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode node = objectMapper.readTree(personsDtoAsString);
+    private PersonDto stringToPersonDto(String personDtoAsString) throws JsonProcessingException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final JsonNode node = objectMapper.readTree(personDtoAsString);
         return objectMapper.convertValue(node, new TypeReference<>() {
         });
     }
@@ -199,8 +200,10 @@ class PersonResourceIT {
     private PersonsDto stringToPersonsDto(String personsDtoAsString) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node = objectMapper.readTree(personsDtoAsString);
-        Set<PersonDto> personsDto = objectMapper.convertValue(node.findPath("personDtos"), new TypeReference<>() {
-        });
+        Set<PersonDto> personsDto = objectMapper.convertValue(
+                node.findPath("personDtos"),
+                new TypeReference<>() {
+                });
         return PersonsDto.createPersonsDto(personsDto);
     }
 

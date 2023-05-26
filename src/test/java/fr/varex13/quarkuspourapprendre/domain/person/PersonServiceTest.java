@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import fr.varex13.quarkuspourapprendre.domain.person.exception.PersonNotExistsException;
-import fr.varex13.quarkuspourapprendre.domain.person.impl.PersonServiceImpl;
+import fr.varex13.quarkuspourapprendre.domain.person.impl.DomainPersonService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -36,7 +36,7 @@ class PersonServiceTest {
     @BeforeEach
     void init() {
         personRepository = mock(PersonRepository.class);
-        personService = new PersonServiceImpl(personRepository);
+        personService = new DomainPersonService(personRepository);
     }
 
     @Nested
@@ -53,20 +53,9 @@ class PersonServiceTest {
 
         @Test
         void WhenPersonsAreFindThenThesePersonsAreReturned() {
-            Person person1 = Person.personBuilder()
-                    .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d"))
-                    .nom("Nom1")
-                    .dateNaissance(LocalDate.of(1980, JANUARY, 1))
-                    .build();
-            Person person2 = Person.personBuilder()
-                    .uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0e"))
-                    .nom("Nom2")
-                    .dateNaissance(LocalDate.of(1977, DECEMBER, 31))
-                    .build();
-            when(personRepository.getAllPersons()).thenReturn(Set.of(
-                    person1,
-                    person2
-            ));
+            Person person1 = Person.personBuilder().uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d")).nom("Nom1").dateNaissance(LocalDate.of(1980, JANUARY, 1)).build();
+            Person person2 = Person.personBuilder().uuid(UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0e")).nom("Nom2").dateNaissance(LocalDate.of(1977, DECEMBER, 31)).build();
+            when(personRepository.getAllPersons()).thenReturn(Set.of(person1, person2));
 
             Set<Person> allPersons = personService.getAllPersons();
             assertThat(allPersons, notNullValue());
@@ -81,19 +70,16 @@ class PersonServiceTest {
         @Test
         void WhenNoPersonIsFindThenAnExceptionIsThrowed() {
             when(personRepository.getPerson(any())).thenReturn(Optional.empty());
-            Executable allPersons = () -> personService.getPerson(UUID.randomUUID());
+            final UUID uuid = UUID.randomUUID();
+            Executable allPersons = () -> personService.getPerson(uuid);
             PersonNotExistsException personNotExistsException = Assertions.assertThrowsExactly(PersonNotExistsException.class, allPersons);
-            assertThat(personNotExistsException.getMessage(), is(("La personne n'existe pas")));
+            assertThat(personNotExistsException.getMessage(), is(("La personne avec l'UUID '" + uuid + "' n'existe pas")));
         }
 
         @Test
         void WhenPersonisFindThenThisPersonIsReturned() throws PersonNotExistsException {
-            UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
-            Person person = Person.personBuilder()
-                    .uuid(uuid)
-                    .nom("Nom1")
-                    .dateNaissance(LocalDate.of(1980, JANUARY, 1))
-                    .build();
+            final UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
+            Person person = Person.personBuilder().uuid(uuid).nom("Nom1").dateNaissance(LocalDate.of(1980, JANUARY, 1)).build();
             when(personRepository.getPerson(uuid)).thenReturn(Optional.of(person));
             Person personRetrieved = personService.getPerson(uuid);
             assertThat(personRetrieved, notNullValue());
@@ -107,11 +93,7 @@ class PersonServiceTest {
         @Test
         void WhenAPersonIsAddedThenThisPersonIsReturned() {
             UUID uuid = UUID.fromString("4fc3f66c-8e76-4b53-9889-c78256836b0d");
-            Person person = Person.personBuilder()
-                    .uuid(uuid)
-                    .nom("Nom1")
-                    .dateNaissance(LocalDate.of(1980, JANUARY, 1))
-                    .build();
+            Person person = Person.personBuilder().uuid(uuid).nom("Nom1").dateNaissance(LocalDate.of(1980, JANUARY, 1)).build();
             when(personRepository.addPerson(person)).thenReturn(person);
             Person personadded = personService.addPerson(person);
             assertThat(personadded, notNullValue());
